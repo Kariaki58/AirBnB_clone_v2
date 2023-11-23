@@ -15,8 +15,9 @@ class DBStorage:
     """The DataBase Storage Class"""
     __engine = None
     __session = None
+
     def __init__(self) -> None:
-        """init session"""   
+        """init session"""
         user = os.getenv('HBNB_MYSQL_USER')
         pwd = os.getenv('HBNB_MYSQL_PWD')
         host = os.getenv('HBNB_MYSQL_HOST')
@@ -26,13 +27,13 @@ class DBStorage:
             metadata = MetaData()
             metadata.drop_all(bind=self.__engine)
         self.__engine = create_engine(db_url, pool_pre_ping=True)
-    
+
     def all(self, cls=None):
         """all data"""
         if cls is not None:
             data = self.__session.query(cls)
         else:
-            classes = [State, City]
+            classes = [State, City, User]
             data = []
             for itter in classes:
                 data.extend(self.__session.query(itter).all())
@@ -45,16 +46,16 @@ class DBStorage:
     def new(self, obj):
         """The new method"""
         self.__session.add(obj)
-    
+
     def save(self):
         """The save method"""
         self.__session.commit()
-    
+
     def delete(self, obj=None):
         """The delete method"""
         if obj:
             self.__session.delete(obj)
-    
+
     def reload(self):
         """The reload method"""
         from models.user import User
