@@ -58,7 +58,7 @@ class DBStorage:
 
     def reload(self):
         """The reload method"""
-        from models.user import User
+        from models.user import User, Base
         from models.city import City, Base
         from models.place import Place
         from models.state import State, Base
