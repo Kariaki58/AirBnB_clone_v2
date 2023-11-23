@@ -218,7 +218,6 @@ class HBNBCommand(cmd.Cmd):
         from models import storage
         print_list = []
         all_db_or_fs = storage.all()
-        print(all_db_or_fs)
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
@@ -230,8 +229,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             for k, v in all_db_or_fs.items():
                 print_list.append(str(v))
-
-        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
