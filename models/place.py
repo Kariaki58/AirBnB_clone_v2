@@ -36,15 +36,15 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-        # @property
-        # def reviews(self):
-        #     from models.review import Review
-        #     from models.__init__ import storage
-        #     instance = storage.all()
-        #     review = Review
-        #     instances = []
-        #     for key, value in instance.items():
-        #         id = key.split(".")
-        #         if review.place_id == id:
-        #             instances.append(value)
-        #     return instances
+        @property
+        def reviews(self):
+            from models.review import Review
+            from models.__init__ import storage
+            instance = storage.all()
+            review = Review
+            instances = []
+            for key, value in instance.items():
+                id = key.split(".")
+                if review.place_id == id:
+                    instances.append(value)
+            return instances
