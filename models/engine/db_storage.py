@@ -12,7 +12,7 @@ from models.amenity import Amenity
 
 
 class DBStorage:
-    """dbstorage"""
+    """The DataBase Storage Class"""
     __engine = None
     __session = None
     def __init__(self) -> None:
@@ -43,16 +43,20 @@ class DBStorage:
         return obj_datas
 
     def new(self, obj):
+        """The new method"""
         self.__session.add(obj)
     
     def save(self):
+        """The save method"""
         self.__session.commit()
     
     def delete(self, obj=None):
+        """The delete method"""
         if obj:
             self.__session.delete(obj)
     
     def reload(self):
+        """The reload method"""
         from models.user import User
         from models.city import City, Base
         from models.place import Place
