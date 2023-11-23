@@ -33,7 +33,7 @@ class DBStorage:
         if cls is not None:
             data = self.__session.query(cls)
         else:
-            classes = [State, City, User]
+            classes = [State, City, User, Place]
             data = []
             for itter in classes:
                 data.extend(self.__session.query(itter).all())
@@ -60,7 +60,7 @@ class DBStorage:
         """The reload method"""
         from models.user import User, Base
         from models.city import City, Base
-        from models.place import Place
+        from models.place import Place, Base
         from models.state import State, Base
         from models.amenity import Amenity
         Base.metadata.create_all(self.__engine)
