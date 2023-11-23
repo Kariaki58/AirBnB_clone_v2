@@ -19,7 +19,7 @@ class DBStorage:
         """init session"""   
         user = os.getenv('HBNB_MYSQL_USER')
         pwd = os.getenv('HBNB_MYSQL_PWD')
-        host = os.getenv('HBNB_MYSQL_HOST', 'localhost')
+        host = os.getenv('HBNB_MYSQL_HOST')
         db = os.getenv('HBNB_MYSQL_DB')
         db_url = f"mysql+mysqldb://{user}:{pwd}@{host}/{db}"
         if os.getenv('HBNB_ENV') == 'test':
@@ -28,18 +28,20 @@ class DBStorage:
         self.__engine = create_engine(db_url, pool_pre_ping=True)
     
     def all(self, cls=None):
-        if cls:
-            Session = sessionmaker(bind=self.__engine)
-            self.__session = Session()
+        """all data"""
+        if cls is not None:
             data = self.__session.query(cls)
         else:
-            classes = [User, State, City, Amenity, Place, Review]
+            classes = [State, City]
             data = []
             for itter in classes:
                 data.extend(self.__session.query(itter).all())
+            print(data)
         obj_datas = {}
-        for data in 
-    
+        for obj in data:
+            print(obj)
+        return obj_datas
+
     def new(self, obj):
         self.__session.add(obj)
     
@@ -52,7 +54,7 @@ class DBStorage:
     
     def reload(self):
         from models.user import User
-        from models.city import Ctiy, Base
+        from models.city import City, Base
         from models.place import Place
         from models.state import State, Base
         from models.amenity import Amenity
