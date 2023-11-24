@@ -45,11 +45,9 @@ class Place(BaseModel, Base):
         def reviews(self):
             from models.review import Review
             from models.__init__ import storage
-            instance = storage.all()
-            review = Review
+            instance = storage.all(Review)
             instances = []
             for key, value in instance.items():
-                id = key.split(".")
-                if review.place_id == id:
+                if value.id == self.id:
                     instances.append(value)
             return instances
