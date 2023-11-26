@@ -1,12 +1,17 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
 import os
 
 
 storage_type = os.environ.get("HBNB_TYPE_STORAGE")
+place_amenity = Table( 'place_amenity',
+    Base.metadata,
+    Column('place_id', String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
+    Column('amenity_id', String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False)
+)
 
 
 class Place(BaseModel, Base):
@@ -28,6 +33,7 @@ class Place(BaseModel, Base):
                 cascade="all, delete, delete-orphan",
                 backref="place"
                 )
+        amenities = relationship("Amenity", secondary=place_amenity, back_populates="place_amenities", viewonly=False)
     else:
         city_id = ""
         user_id = ""
