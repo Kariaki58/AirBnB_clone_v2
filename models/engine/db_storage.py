@@ -33,7 +33,7 @@ class DBStorage:
         if cls is not None:
             data = self.__session.query(cls)
         else:
-            classes = [State, City, User, Place, Review, Amenity]
+            classes = [State, City, User, Place, Review]
             data = []
             for itter in classes:
                 data.extend(self.__session.query(itter).all())
