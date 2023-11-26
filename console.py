@@ -229,8 +229,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             for k, v in all_db_or_fs.items():
                 print_list.append(str(v))
-        for value in print_list:
-            print(value)
 
     def help_all(self):
         """ Help information for the all command """
