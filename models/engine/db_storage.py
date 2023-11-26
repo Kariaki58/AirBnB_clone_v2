@@ -43,7 +43,6 @@ class DBStorage:
             id = obj.id
             key = f"{classname}.{id}"
             obj_datas[key] = obj
-        return obj_datas
 
     def new(self, obj):
         """The new method"""
@@ -64,7 +63,7 @@ class DBStorage:
         from models.city import City, Base
         from models.place import Place, Base
         from models.state import State, Base
-        from models.amenity import Amenity, Base
+        from models.amenity import Amenity
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session)
