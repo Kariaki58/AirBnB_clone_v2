@@ -43,6 +43,7 @@ class DBStorage:
             id = obj.id
             key = f"{classname}.{id}"
             obj_datas[key] = obj
+        return obj_datas
 
     def new(self, obj):
         """The new method"""
