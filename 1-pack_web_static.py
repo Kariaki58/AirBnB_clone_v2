@@ -14,7 +14,9 @@ def do_pack():
     cmd = "mkdir -p versions"
     local(cmd)
 
-    archive_name = "web_static_{}.tgz".format(datetime.now().strftime("%Y%m%d%H%M%S"))
+    archive_name = "web_static_{}.tgz".format(
+            datetime.now().strftime("%Y%m%d%H%M%S")
+            )
 
     output = local("tar -cvzf versions/{} web_static".format(archive_name))
     if output.succeeded:
