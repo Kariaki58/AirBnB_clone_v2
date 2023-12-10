@@ -1,28 +1,20 @@
 #!/usr/bin/env bash
-# prepare your web servers
-
-if [ ! -d "/etc/nginx/" ]; then
-	sudo apt-get -y upgrade
-	sudo apt-get -y update
-	sudo apt-get -y install nginx
+# Bash script that sets up your web servers for the deployment of web_static
+if ! command -v nginx &> /dev/null; then
+    sudo apt-get -y update
+    sudo apt-get -y install nginx
 fi
+sudo mkdir -p /data/web_static/releases/test
+sudo mkdir -p /data/web_static/shared
 
-mkdir -p /data /data/web_static /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/
+echo "<html><head></head><body>Holberton School</body></html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
-echo "
-<html>
-  <head>
-  </head>
-  <body>
-    Holberton School
-  </body>
-</html>
-" | sudo tee data/web_static/releases/test/index.html
-sudo ln -sfT /data/web_static/current /data/web_static/releases/test/
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+
 sudo chown -R ubuntu:ubuntu /data/
-nginx_conf="/etc/nginx/sites-available/default"
-nginx_alias_config="location /hbnb_static/ { alias /data/web_static/current/; }"
-if ! sudo grep -qF "$nginx_alias_config" "$nginx_config"; then
-	    sudo sed -i "/server {/a $nginx_alias_config" "$nginx_config"
-fi
+
+nginx_config="/etc/nginx/sites-available/default"
+sudo sed -i '/location \/hbnb_static {/,$d' "$nginx_config"
+sudo sed -i '/server_name _;/ a\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}' "$nginx_config"
+
 sudo service nginx restart
