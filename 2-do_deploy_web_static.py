@@ -1,43 +1,48 @@
 #!/usr/bin/python3
-"""
-Fabric script that distributes an archive to your web servers using do_deploy
-"""
+"""Fabric script to deploy web_static"""
 
-from fabric.api import *
+from fabric.api import env, put, run
 from os.path import exists
+
 env.hosts = ['54.197.122.71', '34.207.61.76']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
-    """Distributes an archive to the web servers"""
+    """Deploy web_static to web servers"""
     if not exists(archive_path):
         return False
 
     try:
-        archive_name = archive_path.split("/")[-1]
-        archive_no_ext = archive_name.split(".")[0]
-        path = "/data/web_static/releases/{}".format(archive_no_ext)
+        # Upload the archive to /tmp/ directory on the web server
+        put(archive_path, '/tmp/')
 
-        put(archive_path, "/tmp/")
+        # Extract the archive to /data/web_static/releases/
+        filename = archive_path.split("/")[-1]
+        folder_name = "/data/web_static/releases/{}".format(
+            filename.split(".")[0])
+        run("mkdir -p {}".format(folder_name))
+        run("tar -xzf /tmp/{} -C {}".format(filename, folder_name))
 
-        run("mkdir -p {}".format(path))
-        run("tar -xzf /tmp/{} -C {}".format(archive_name, path))
+        # Delete the archive from the web server
+        run("rm /tmp/{}".format(filename))
 
-        run("rm /tmp/{}".format(archive_name))
+        # Move contents to the proper location
+        run("mv {}/web_static/* {}".format(folder_name, folder_name))
 
-        run("mv {}/web_static/* {}".format(path, path))
+        # Remove the web_static directory
+        run("rm -rf {}/web_static".format(folder_name))
 
-        run("rm -rf {}/web_static".format(path))
-
+        # Remove the current symbolic link
         run("rm -rf /data/web_static/current")
 
-        run("ln -s {} /data/web_static/current".format(path))
+        # Create a new symbolic link
+        run("ln -s {} /data/web_static/current".format(folder_name))
 
         print("New version deployed!")
         return True
 
     except Exception as e:
-        print(e)
+        print("Deployment failed:", str(e))
         return False
