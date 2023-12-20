@@ -23,7 +23,7 @@ def do_deploy(archive_path):
         folder_name = "/data/web_static/releases/{}".format(
             filename.split(".")[0])
         run("sudo mkdir -p {}".format(folder_name))
-        run("tar -xzf /tmp/{} -C {}".format(filename, folder_name))
+        run("sudo tar -xzf /tmp/{} -C {}".format(filename, folder_name))
 
         # Delete the archive from the web server
         run("sudo rm /tmp/{}".format(filename))
