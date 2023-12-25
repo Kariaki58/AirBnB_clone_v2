@@ -1,2 +1,0 @@
-print("something")
-helo worldddd
