@@ -5,10 +5,15 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route('/', strict_slashes=False)
 def display():
     """return a string"""
     return 'Hello HBNB!'
+
+@app.route('/hbnb', strict_slashes=False)
+def hbnb_route():
+    """return HBNB"""
+    return "HBNB"
 
 
 if __name__ == '__main__':
