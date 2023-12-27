@@ -17,3 +17,15 @@ class State(BaseModel, Base):
         cities = relationship("City", cascade="all, delete", backref="state")
     else:
         name = ""
+
+        @property
+        def cities(self):
+            """get list of city session from the db"""
+            from models import storage
+            from models.city import City
+            list_data = []
+            get_all_cities = storage.all(City)
+            for key, value in get_all_cities.items():
+                if value.state_id == self.id:
+                    list_data.append(value)
+            return list_data
