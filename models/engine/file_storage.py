@@ -64,6 +64,7 @@ class FileStorage:
             classname = obj.to_dict()["__class__"]
             key = f"{classname}.{id}"
             del FileStorage.__objects[key]
+        self.save()
     
     def close(self):
         """close function"""

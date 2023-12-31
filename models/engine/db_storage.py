@@ -43,12 +43,10 @@ class DBStorage:
             id = obj.id
             key = f"{classname}.{id}"
             obj_datas[key] = obj
-        for value in obj_datas.values():
-            print(value)
         return obj_datas
 
     def new(self, obj):
-        """The new method"""
+        """The new method"""    
         self.__session.add(obj)
 
     def save(self):
