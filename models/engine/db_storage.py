@@ -46,7 +46,7 @@ class DBStorage:
         return obj_datas
 
     def new(self, obj):
-        """The new method"""    
+        """The new method"""
         self.__session.add(obj)
 
     def save(self):
@@ -68,7 +68,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session)
-    
+
     def close(self):
         """close a session"""
         self.__session.close()
