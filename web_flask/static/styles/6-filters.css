@@ -40,6 +40,8 @@
 
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
+	overflow-y: auto;
+	max-height: 300px;
 }
 
 .locations:hover .popover {
@@ -58,7 +60,7 @@ ul {
 
 li {
 	padding-left: 30px;
-}	
+}
 
 h2 {
 	font-size: 16px;
