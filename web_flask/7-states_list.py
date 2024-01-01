@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""list of states"""
 from models import storage
 from flask import Flask, render_template
 from models.state import State
@@ -16,6 +17,7 @@ def remove_session(session):
 
 @app.route("/states_list", strict_slashes=False)
 def states_list():
+    """state router"""
     dictionary = {}
     listofdictionary = []
     for data in states.values():
