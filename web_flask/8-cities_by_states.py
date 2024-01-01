@@ -18,8 +18,8 @@ def remove_session(session):
 def states_list():
     """state router"""
     states = storage.all(State)
-    sorted_states = sorted(states.values(), key=lambda item: item.name)
-    return render_template('8-cities_by_states.html', sorted_states=sorted_states)
+    sortedd = sorted(states.values(), key=lambda item: item.name)
+    return render_template('8-cities_by_states.html', sorted_states=sortedd)
 
 
 if __name__ == "__main__":
