@@ -7,8 +7,6 @@ from models.state import State
 
 app = Flask(__name__)
 
-states = storage.all(State)
-
 
 @app.teardown_appcontext
 def remove_session(session):
@@ -19,14 +17,9 @@ def remove_session(session):
 @app.route("/states_list", strict_slashes=False)
 def states_list():
     """state router"""
-    dictionary = {}
-    listofdictionary = []
-    for data in states.values():
-        dictionary['name'] = data.name
-        dictionary['id'] = data.id
-        listofdictionary.append(dictionary)
-    sorted_data = sorted(listofdictionary, key=lambda x: x['name'])
-    return render_template('7-states_list.html', sorted_data=sorted_data)
+    states = storage.all(State)
+    sorted_states = sorted(states.values(), key=lambda st: st.name)
+    return render_template('7-states_list.html', states=sorted_states)
 
 
 if __name__ == "__main__":
