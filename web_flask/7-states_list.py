@@ -14,7 +14,7 @@ def remove_session(params):
     storage.close()
 
 
-@app.route("/cities_by_states", strict_slashes=False)
+@app.route("/states_list", strict_slashes=False)
 def states_list():
     """state router"""
     states = storage.all(City)
