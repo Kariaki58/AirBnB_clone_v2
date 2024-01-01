@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def remove_session(session):
+def remove_session(self):
     """close session after each request"""
     storage.close()
 
@@ -18,7 +18,7 @@ def remove_session(session):
 def states_list():
     """state router"""
     states = storage.all(State)
-    sorted_states = sorted(states.values(), key=lambda st: st.name)
+    sorted_states = sorted(states.values(), key=lambda item: item.name)
     return render_template('7-states_list.html', states=sorted_states)
 
 
