@@ -19,7 +19,7 @@ def states_list():
     """state router"""
     states = storage.all(State)
     sorted_states = sorted(states.values(), key=lambda item: item.name)
-    return render_template('8-cities_by_states.html', states=sorted_states)
+    return render_template('8-cities_by_states.html', sorted_states=sorted_states)
 
 
 if __name__ == "__main__":
