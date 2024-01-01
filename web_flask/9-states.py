@@ -13,6 +13,7 @@ def remove_session(session):
     """close session after each request"""
     storage.close()
 
+
 @app.route("/states", strict_slashes=False)
 def states():
     states = storage.all(State)
@@ -30,6 +31,7 @@ def states_id(id):
             check = True
             dictionary = state
     return render_template("9-states.html", states=dictionary, check=check)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
