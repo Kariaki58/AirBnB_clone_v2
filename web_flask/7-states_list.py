@@ -2,7 +2,7 @@
 """list of states"""
 from models import storage
 from flask import Flask, render_template
-from models.state import State
+from models.city import City
 
 
 app = Flask(__name__)
@@ -14,12 +14,12 @@ def remove_session(params):
     storage.close()
 
 
-@app.route("/states_list", strict_slashes=False)
+@app.route("/cities_by_states", strict_slashes=False)
 def states_list():
     """state router"""
-    states = storage.all(State)
+    states = storage.all(City)
     sorted_states = sorted(states.values(), key=lambda item: item.name)
-    return render_template('7-states_list.html', states=sorted_states)
+    return render_template('8-states_list.html', states=sorted_states)
 
 
 if __name__ == "__main__":
