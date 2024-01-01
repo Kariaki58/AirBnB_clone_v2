@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def remove_session(params):
+def remove_session(session):
     """close session after each request"""
     storage.close()
 
