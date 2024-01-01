@@ -43,8 +43,6 @@ class DBStorage:
             id = obj.id
             key = f"{classname}.{id}"
             obj_datas[key] = obj
-        for value in obj_datas.values():
-            print(value)
         return obj_datas
 
     def new(self, obj):
@@ -70,3 +68,10 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session)
+    
+    def remove(self):
+        """remove method"""
+        self.__session.close()
+    
+    def close(self):
+        self.__session.close()
